@@ -3,74 +3,64 @@
 <!-- Section: Footer -->
 <section class="mb-4">
     <div class="card">
-      <div class="card-header py-3">
-        <h5 class="mb-0 text-center"><strong>Form Create.</strong></h5>
+      <div class="card-header py-3 bg-success">
+        <h5 class="mb-0 text-center text-white"><strong>REQUEST</strong></h5>
       </div>
     </div>
   </section>
-  <!-- Section: Footer -->
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">@</span>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Username"
-      aria-label="Username"
-      aria-describedby="basic-addon1"
-    />
-  </div>
+
+  <form action="/create" method="post">
+    <!-- Section: form -->
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Sale-Person</span>
+      <input type="text" class="form-control" aria-label="salePerson" name="salePerson" aria-describedby="basic-addon1" />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon2">E-mail</span>
+      <input type="email" class="form-control" aria-label="email" name="email" aria-describedby="basic-addon2" />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon2">Mobile</span>
+      <input type="tel" class="form-control" aria-label="mobile" name="mobile" aria-describedby="basic-addon2" />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon3">Request Date</span>
+      <input type="date" class="form-control" aria-label="createDate" name="createDate" aria-describedby="basic-addon3" />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon4">School Name</span>
+      <input type="text" class="form-control" aria-label="schoolName" name="schoolName" aria-describedby="basic-addon4" />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon7">LIC No</span>
+      <input type="number" class="form-control" aria-label="licNo" name="licNo" aria-describedby="basic-addon7" />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon5">Build Type</span>
+      <select name="buildType" aria-describedby="basic-addon5" class="form-control">
+        <option value="LAN">LAN</option>
+        <option value="Standalone">Standalone</option>
+      </select>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon6">Status</span>
+      <select name="status" aria-describedby="basic-addon6" class="form-control">
+        <option value="Complete">Complete</option>
+        <option value="Pending">Pending</option>
+      </select>
+    </div>
+    
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon8">Title</span>
+      <input type="text" class="form-control" aria-label="titles" name="titles" aria-describedby="basic-addon8" />
+    </div>
+    <div class="input-group mb-3">
+      <input type="submit" class="form-control btn btn-success" name="submit" value="Submit" />
+    </div>
+  </form>
   
-  <div class="input-group mb-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Recipient's username"
-      aria-label="Recipient's username"
-      aria-describedby="basic-addon2"
-    />
-    <span class="input-group-text" id="basic-addon2">@example.com</span>
-  </div>
   
-  <label for="basic-url" class="form-label">Your vanity URL</label>
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-    <input
-      type="text"
-      class="form-control"
-      id="basic-url1"
-      aria-describedby="basic-addon3"
-    />
-  </div>
   
-  <div class="input-group mb-3">
-    <span class="input-group-text">$</span>
-    <input
-      type="text"
-      class="form-control"
-      aria-label="Amount (to the nearest dollar)"
-    />
-    <span class="input-group-text">.00</span>
-  </div>
-  
-  <div class="input-group mb-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Username"
-      aria-label="Username"
-    />
-    <span class="input-group-text">@</span>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Server"
-      aria-label="Server"
-    />
-  </div>
-  
-  <div class="input-group">
-    <span class="input-group-text">With textarea</span>
-    <textarea class="form-control" aria-label="With textarea"></textarea>
-  </div>
 
 <%- include('partials/Footer') %>
