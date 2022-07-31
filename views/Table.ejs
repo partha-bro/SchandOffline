@@ -1,0 +1,60 @@
+<!--Section: Sales Performance KPIs-->
+<section class="mb-4">
+    <div class="card">
+      <div class="card-header text-center py-3">
+        <h5 class="mb-0 text-center">
+          <strong>Sales Performance</strong>
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover text-nowrap">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Sale-Person</th>
+                <th scope="col">School</th>
+                <th scope="col">Build-Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Lic No</th>
+                <th scope="col">Request Date</th>
+                <th scope="col">Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% let count = 1 %>
+              <% requests.forEach((request)=>{ %>
+                <tr>
+                  <td><%= count++ %></td>
+                  <td><a class="text-primry" href="/salePerson/<%= request._id %>"><strong><%= request.salePerson.name %></strong></a></td>
+                  <td><a class="text-secondary" href="/school/<%= request._id %>"><strong><%= request.school.name %></strong></a></td>
+                  <td><%= request.buildType %></td>
+                  <% if(request.status === 'Complete'){ %>
+                    <td class="text-success"><strong><%= request.status %></strong></td>
+                  <% }else{ %>
+                    <td class="text-danger"><strong><%= request.status %></strong></td>
+                  <% } %>
+                  
+                  <td><%= request.licNo %></td>
+                  <td><%= request.createDate %></td>
+                  <td><a class="btn btn-warning" href="/edit/<%= request._id %>">Edit</a></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          
+          <!-- <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link">PAGE:</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+            </ul>
+          </nav> -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Section: Sales Performance KPIs-->

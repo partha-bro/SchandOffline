@@ -4,13 +4,11 @@
 <section class="mb-4">
     <div class="card">
       <div class="card-header py-3 bg-success">
-        <h5 class="mb-0 text-center text-white"><strong>Offline Resources</strong></h5>
+        <h5 class="mb-0 text-center text-white"><strong><%= status %> Offline Resources [Total: <%= requests.length %>]</strong></h5>
       </div>
     </div>
   </section>
   <!-- Section: Main chart -->
-
-  <%- include('Boxes') %>
 
   <%- include('Table') %>
 

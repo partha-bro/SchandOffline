@@ -8,18 +8,29 @@ mongoose.connect(url+database)
 .then( e=>console.log(`MongoDB is connected with ${e.connection.host}`))
 .catch( err=>console.log(`Database Error: ${err}`))
 
+const salePersonSchema = new mongoose.Schema(
+    {
+        name: String,
+        email: String,
+        mobile: Number
+    }
+)
+const schoolSchema = new mongoose.Schema(
+    {
+        name: String,
+        state: String
+    }
+)
+
 const schandOfflineSchema = new mongoose.Schema(
     {
-        requestNo: String,
-        salePerson: String,
-        email: String,
-        mobile: Number,
+        salePerson: salePersonSchema,
         createDate: String,
-        schoolName: String,
+        school: schoolSchema,
         licNo: Number,
         buildType: String,
         status: String,
-        titles: Array
+        titles: String
     }
 )
 

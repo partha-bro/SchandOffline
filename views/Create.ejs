@@ -12,48 +12,54 @@
   <form action="/create" method="post">
     <!-- Section: form -->
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1">Sale-Person</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon1">Sale-Person</span>
       <input type="text" class="form-control" aria-label="salePerson" name="salePerson" aria-describedby="basic-addon1" />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon2">E-mail</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon2">E-mail</span>
       <input type="email" class="form-control" aria-label="email" name="email" aria-describedby="basic-addon2" />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon2">Mobile</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon2">Mobile</span>
       <input type="tel" class="form-control" aria-label="mobile" name="mobile" aria-describedby="basic-addon2" />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon3">Request Date</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon3">Request Date</span>
       <input type="date" class="form-control" aria-label="createDate" name="createDate" aria-describedby="basic-addon3" />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon4">School Name</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon4">School Name</span>
       <input type="text" class="form-control" aria-label="schoolName" name="schoolName" aria-describedby="basic-addon4" />
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon7">LIC No</span>
-      <input type="number" class="form-control" aria-label="licNo" name="licNo" aria-describedby="basic-addon7" />
+      <span class="input-group-text bg-success text-white" id="basic-addon5">State</span>
+      <input type="text" class="form-control" aria-label="state" name="state" aria-describedby="basic-addon5" />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text bg-success text-white" id="basic-addon6">LIC No</span>
+      <input type="number" class="form-control" aria-label="licNo" name="licNo" aria-describedby="basic-addon6" />
     </div>
 
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon5">Build Type</span>
-      <select name="buildType" aria-describedby="basic-addon5" class="form-control">
+      <span class="input-group-text bg-success text-white" id="basic-addon7">Build Type</span>
+      <select name="buildType" aria-describedby="basic-addon7" class="form-control">
+        <option >Please select project type</option>
         <option value="LAN">LAN</option>
         <option value="Standalone">Standalone</option>
       </select>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon6">Status</span>
-      <select name="status" aria-describedby="basic-addon6" class="form-control">
+      <span class="input-group-text bg-success text-white" id="basic-addon8">Status</span>
+      <select name="status" aria-describedby="basic-addon8" class="form-control">
+        <option >Please select project status</option>
         <option value="Complete">Complete</option>
         <option value="Pending">Pending</option>
       </select>
     </div>
     
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon8">Title</span>
-      <input type="text" class="form-control" aria-label="titles" name="titles" aria-describedby="basic-addon8" />
+      <span class="input-group-text bg-success text-white" id="basic-addon9">Title</span>
+      <input type="text" class="form-control" aria-label="titles" name="titles" aria-describedby="basic-addon9" />
     </div>
     <div class="input-group mb-3">
       <input type="submit" class="form-control btn btn-success" name="submit" value="Submit" />

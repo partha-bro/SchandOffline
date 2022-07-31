@@ -1,3 +1,8 @@
+
+const totalRequestFun = (requests) => {
+    return requests.length
+}
+
 const sumOfTotalSchandTotalApp = (requests) => {
     let count = 0
     requests.forEach(r=>{
@@ -23,4 +28,4 @@ const sumOfTotalLicNo = (requests) => {
 }
 
 
-module.exports = { sumOfTotalSchandTotalApp,sumOfTotalLanPortal,sumOfTotalLicNo }
+module.exports = { totalRequestFun,sumOfTotalSchandTotalApp,sumOfTotalLanPortal,sumOfTotalLicNo }
