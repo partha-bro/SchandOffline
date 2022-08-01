@@ -13,7 +13,7 @@ server.route('/')
 .get(
     (req,res)=>{
         
-        SchandDB.find().sort({createDate:-1}).limit(10).then(
+        SchandDB.find().sort({createDate:-1}).limit().then(
             requests=>{
 
                 SchandDB.find().then(
