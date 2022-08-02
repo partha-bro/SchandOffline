@@ -1,7 +1,7 @@
-<!--Section: Minimal statistics cards-->
+<!--Section: Total count as box Start-->
 <section>
     <div class="row">
-      <div class="col-xl-3 col-sm-6 col-12 mb-4">
+      <div class="col-xl-2 col-sm-6 col-12 mb-4">
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
@@ -46,16 +46,31 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12 mb-4">
+      <div class="col-xl-2 col-sm-6 col-12 mb-4">
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between px-md-1">
               <div class="align-self-center">
-                <i class="fas fa-map-marker-alt text-danger fa-3x"></i>
+                <i class="fas fa fa-mobile text-primary fa-3x"></i>
               </div>
               <div class="text-end">
-                <h3><%= totalLicNo %></h3>
-                <p class="mb-0">Total Lic. No</p>
+                <h3><%= totalAppLicNo %></h3>
+                <p class="mb-0">Appl. Lic. No</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between px-md-1">
+              <div class="align-self-center">
+                <i class="fas fa fa-laptop text-danger fa-3x"></i>
+              </div>
+              <div class="text-end">
+                <h3><%= totalLanLicNo %></h3>
+                <p class="mb-0">LAN Lic. No</p>
               </div>
             </div>
           </div>
@@ -63,4 +78,4 @@
       </div>
     </div>
   </section>
-  <!--Section: Minimal statistics cards-->
+  <!--Section: Total count as box End -->

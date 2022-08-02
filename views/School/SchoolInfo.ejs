@@ -3,7 +3,7 @@
 <!--Section: Sales Performance KPIs-->
 <section class="mb-4">
   <div class="card">
-    <div class="card-header text-center py-3">
+    <div class="card-header text-center py-3 bg-success text-white">
       <h5 class="mb-0 text-center">
         <strong><%= title %></strong>
       </h5>
@@ -13,7 +13,7 @@
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
-              <th scope="col">No.</th>
+              <th scope="col">Sales-person</th>
               <th scope="col">School</th>
               <th scope="col">Titles</th>
               <th scope="col">State</th>
@@ -21,9 +21,14 @@
           </thead>
           <tbody>
               <tr>
-                <td><%= request.school._id %></td>
+                <td><a class="text-primry" href="/salePerson/<%= request._id %>"><strong><%= request.salePerson.name %></strong></a></td>
                 <td><%= request.school.name %></td>
-                <td><%= request.titles %></td>
+                <% const titlesArray = request.titles.split(',') %>
+                <td><ol>
+                <% titlesArray.forEach((title)=>{ %>
+                  <li><%= title %></li>
+                <% }) %>
+                </ol></td>
                 <td><%= request.school.state %></td>
               </tr>
           </tbody>

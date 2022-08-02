@@ -3,7 +3,7 @@
 <!--Section: Sales Performance KPIs-->
 <section class="mb-4">
   <div class="card">
-    <div class="card-header text-center py-3">
+    <div class="card-header text-center py-3 bg-success text-white">
       <h5 class="mb-0 text-center">
         <strong><%= title %></strong>
       </h5>
@@ -20,9 +20,10 @@
               </tr>
             </thead>
             <tbody>
+              <% let count = 1 %>
             <% requests.forEach((request)=>{ %>
               <tr>
-                <td><%= request.salePerson._id %></td>
+                <td><%= count++ %></td>
                 <td><%= request.salePerson.name %></td>
                 <td><%= request.salePerson.email %></a></td>
                 <td><%= request.salePerson.mobile %></td>

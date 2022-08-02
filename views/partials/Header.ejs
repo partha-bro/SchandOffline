@@ -56,13 +56,20 @@
           <img src="/img/schand_logo.png" height="50px" alt="S.Chand" loading="lazy" />
         </a>
 
+        <!-- Search form -->
+        <form class="d-none d-md-flex input-group w-auto my-auto" action="/search" method="post">
+          <input autocomplete="on" type="search" class="form-control rounded"
+            placeholder='Any word about school name' style="min-width: 250px" name="search"/>
+          <span class="input-group-text border-0" title="Press Enter"><i class="fas fa-search"></i></span>
+        </form>
+
         <!-- Right links -->
         <ul class="navbar-nav ms-auto d-flex flex-row">
-
+          
           <!-- Icon -->
           <li class="nav-item">
-            <a class="nav-link me-3 me-lg-0 btn-bg btn-danger text-white" id="create-button" href="/create" title="new create">
-              <i class="fas fa-plus"></i>
+            <a class="nav-link me-3 btn-danger text-white" id="create-button" href="/create" title="new create">
+              <!-- <i class="fas fa-plus"></i> -->NEW
             </a>
           </li>
           

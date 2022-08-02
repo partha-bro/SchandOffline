@@ -22,6 +22,7 @@ const schoolSchema = new mongoose.Schema(
     }
 )
 
+
 const schandOfflineSchema = new mongoose.Schema(
     {
         salePerson: salePersonSchema,
@@ -33,5 +34,6 @@ const schandOfflineSchema = new mongoose.Schema(
         titles: String
     }
 )
+schandOfflineSchema.index({"school.name": 'text'})
 
 module.exports = mongoose.model('request',schandOfflineSchema)
