@@ -1,4 +1,5 @@
 <%- include('partials/Header') %>
+<%- include('partials/Menu') %>
 
 <!-- Section: Footer -->
 <section class="mb-4">
@@ -13,36 +14,36 @@
 
     <!-- Section: form -->
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon1">Sale-Person</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon1" style="min-width: 120px">Sale-Person</span>
       <input type="text" class="form-control" aria-label="salePerson" name="salePerson" aria-describedby="basic-addon1" value="<%= request.salePerson.name %>"/>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon2">E-mail</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon2" style="min-width: 120px">E-mail</span>
       <input type="email" class="form-control" aria-label="email" name="email" aria-describedby="basic-addon2" value="<%= request.salePerson.email %>"/>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon2">Mobile</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon2" style="min-width: 120px">Mobile</span>
       <input type="tel" class="form-control" aria-label="mobile" name="mobile" aria-describedby="basic-addon2" value="<%= request.salePerson.mobile %>"/>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon3">Request Date</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon3" style="min-width: 120px">Request Date</span>
       <input type="date" class="form-control" aria-label="createDate" name="createDate" aria-describedby="basic-addon3" value="<%= request.createDate %>"/>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon4">School Name</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon4" style="min-width: 120px">School Name</span>
       <input type="text" class="form-control" aria-label="schoolName" name="schoolName" aria-describedby="basic-addon4" value="<%= request.school.name %>"/>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon5">State</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon5" style="min-width: 120px">State</span>
       <input type="text" class="form-control" aria-label="state" name="state" aria-describedby="basic-addon5" value="<%= request.school.state %>"/>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon6">LIC No</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon6" style="min-width: 120px">LIC No</span>
       <input type="number" class="form-control" aria-label="licNo" name="licNo" aria-describedby="basic-addon6" value="<%= request.licNo %>"/>
     </div>
 
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon7">Build Type</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon7" style="min-width: 120px">Build Type</span>
       <select name="buildType" aria-describedby="basic-addon7" class="form-control" >
         <% if(request.buildType === 'LAN'){ %>
             <option value="LAN" selected>LAN</option>
@@ -55,7 +56,7 @@
       </select>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon8">Status</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon8" style="min-width: 120px">Status</span>
       <select name="status" aria-describedby="basic-addon8" class="form-control" >
         <% if(request.status === 'Complete'){ %>
             <option value="Complete" selected>Complete</option>
@@ -69,7 +70,7 @@
     </div>
     
     <div class="input-group mb-3">
-      <span class="input-group-text bg-success text-white" id="basic-addon9">Title</span>
+      <span class="input-group-text bg-success text-white" id="basic-addon9" style="min-width: 120px">Title</span>
       <input type="text" class="form-control" aria-label="titles" name="titles" aria-describedby="basic-addon9" value="<%= request.titles %>"/>
     </div>
     <div class="input-group mb-3">

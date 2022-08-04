@@ -1,5 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
+const passportLocalMongoose = require('passport-local-mongoose')
 
 const url = process.env.MONGODB_URL
 const database = 'schandOfflineDB'
@@ -7,6 +8,20 @@ const database = 'schandOfflineDB'
 mongoose.connect(url+database)
 .then( e=>console.log(`MongoDB is connected with ${e.connection.host}`))
 .catch( err=>console.log(`Database Error: ${err}`))
+
+const userSchema = new mongoose.Schema(
+    {
+        username: {
+            type: String
+        },
+        password: {
+            type: String
+        }
+    }
+)
+
+userSchema.plugin(passportLocalMongoose)
+
 
 const salePersonSchema = new mongoose.Schema(
     {
@@ -34,6 +49,8 @@ const schandOfflineSchema = new mongoose.Schema(
         titles: String
     }
 )
-schandOfflineSchema.index({"school.name": 'text'})
+schandOfflineSchema.index({"school.name": "text"})
 
-module.exports = mongoose.model('request',schandOfflineSchema)
+const SchandDB = mongoose.model('request',schandOfflineSchema)
+const User = mongoose.model('user',userSchema)
+module.exports = { SchandDB, User }

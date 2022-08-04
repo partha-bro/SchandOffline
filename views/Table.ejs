@@ -18,7 +18,9 @@
                 <th scope="col">Status</th>
                 <th scope="col">Lic No</th>
                 <th scope="col">Request Date</th>
-                <th scope="col">Edit</th>
+                <% if(userAccess === 'admin'){ %>
+                  <th scope="col">Edit</th>
+                <% } %>
               </tr>
             </thead>
             <tbody>
@@ -37,7 +39,9 @@
                   
                   <td><%= request.licNo %></td>
                   <td><%= request.createDate %></td>
-                  <td><a class="btn btn-warning" href="/edit/<%= request._id %>">Edit</a></td>
+                  <% if(userAccess === 'admin'){ %>
+                    <td><a class="btn btn-warning" href="/edit/<%= request._id %>">Edit</a></td>
+                  <% } %>
                 </tr>
               <% }) %>
             </tbody>

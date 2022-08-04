@@ -1,9 +1,11 @@
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
+const session = require('express-session')
+const passport = require('passport')
 
 // database import
-const SchandDB = require('../model/SchandOff')
+const { SchandDB, User } = require('../model/SchandOff')
 // some method import from calculate 
 const { totalRequestFun,sumOfTotalSchandTotalApp,sumOfTotalLanPortal,sumOfAppLicNo,sumOfLanLicNo } = require('./Calculate')
 
@@ -11,39 +13,110 @@ const server = express()
 server.set('view engine', 'ejs')
 server.use(express.static('public'))
 server.use(bodyParser.urlencoded({extended:true}))
+server.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+  }))
+server.use(passport.initialize())
+server.use(passport.session())
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//authenticate route
+server.route('/Register')
+.get(
+    (req,res)=>{
+        res.render('Signpage/Auth', {title:'Register'})
+    }
+)
+.post(
+    (req,res)=>{
+        User.register({username:req.body.username}, req.body.password, (err, user) => {
+            if (err) { 
+                console.log(`DB register Error: ${err}`)
+                res.redirect('/Register') 
+            }else{
+                passport.authenticate("local")(req,res, ()=>{
+                    res.redirect('/')
+                })
+            }
+        })
+    }
+)
+
+server.route('/Login')
+.get(
+    (req,res)=>{
+        res.render('Signpage/Auth', {title:'Login'})
+    }
+)
+.post(
+    (req,res)=>{
+        const user = new User(
+            {
+                username: req.body.username,
+                password: req.body.password
+            }
+        )
+        req.login(user, (err)=>{
+            if(err){
+                console.log(`DB login Error: ${err}`)
+                res.redirect('/login') 
+            }else{
+                passport.authenticate("local")(req,res, ()=>{
+                    res.redirect('/')
+                })
+            }
+        })
+        
+    }
+)
+server.get('/logout',(req,res)=>{
+    req.logout((err)=> {
+        if (err) { console.log(`DB logout Error: ${err}`) }
+        res.redirect('/Login');
+      });
+})
 
 // Home route
 server.route('/')
 .get(
     (req,res)=>{
-        // select all data with decending order of createDate
-        SchandDB.find().sort({createDate:-1}).limit().then(
-            requests=>{
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            // select all data with decending order of createDate
+            SchandDB.find().sort({createDate:-1}).limit().then(
+                requests=>{
 
-                SchandDB.find().then(
-                    allRequests=>{
-                        const totalRequest = totalRequestFun(allRequests)
-                        const totalSchandTotal = sumOfTotalSchandTotalApp(allRequests)
-                        const totalLanPortal = sumOfTotalLanPortal(allRequests)
-                        // const totalLicNo = sumOfTotalLicNo(allRequests)
-                        const totalAppLicNo = sumOfAppLicNo(allRequests)
-                        const totalLanLicNo = sumOfLanLicNo(allRequests)
-                        res.render('Home', {
-                            title:'Home',
-                            totalRequest,
-                            totalSchandTotal,
-                            totalLanPortal,
-                            totalAppLicNo,
-                            totalLanLicNo,
-                            requests
-                            }
-                        )
-                    }
-                )
-                
-            }
-        ).catch(err=>console.log(`DB Read Error: ${err}`))
-        
+                    SchandDB.find().then(
+                        allRequests=>{
+                            const totalRequest = totalRequestFun(allRequests)
+                            const totalSchandTotal = sumOfTotalSchandTotalApp(allRequests)
+                            const totalLanPortal = sumOfTotalLanPortal(allRequests)
+                            const totalAppLicNo = sumOfAppLicNo(allRequests)
+                            const totalLanLicNo = sumOfLanLicNo(allRequests)
+                            res.render('Home', {
+                                title:'Home',
+                                totalRequest,
+                                totalSchandTotal,
+                                totalLanPortal,
+                                totalAppLicNo,
+                                totalLanLicNo,
+                                userAccess,
+                                requests
+                                }
+                            )
+                        }
+                    )
+                    
+                }
+            ).catch(err=>console.log(`DB Read Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
     }
 )
 
@@ -51,7 +124,18 @@ server.route('/')
 server.route('/create')
 .get(
     (req,res)=>{
-        res.render('Create', {title: 'Create'})
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            if(userAccess === 'admin'){
+                res.render('Create', {title: 'Create',userAccess})
+            }else{
+                res.redirect('/')
+            }
+            
+        }else{
+            res.redirect('/Login')
+        }
+        
     }
 )
 .post(
@@ -87,12 +171,23 @@ server.route('/create')
 server.route('/edit/:id')
 .get(
     (req,res)=>{
-        const id = req.params.id
-        SchandDB.findById(id).then(
-            request=>{
-                res.render('Edit', {title:'Edit',request})
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            if(userAccess === 'admin'){
+                const id = req.params.id
+                SchandDB.findById(id).then(
+                    request=>{
+                        res.render('Edit', {title:'Edit',userAccess,request})
+                    }
+                ).catch(err=>console.log(`DB Edit Error: ${err}`))
+            }else{
+                res.redirect('/')
             }
-        ).catch(err=>console.log(`DB Edit Error: ${err}`))
+            
+        }else{
+            res.redirect('/Login')
+        }
+        
     }
 )
 .post(
@@ -127,16 +222,23 @@ server.route('/edit/:id')
 server.route('/status/:status')
 .get(
     (req,res) => {
-        SchandDB.find({status:req.params.status}).sort({createDate:-1}).then(
-            requests=>{
-                res.render('Status', {
-                    title:'Status',
-                    status: req.params.status,
-                    requests
-                    }
-                )
-            }
-        ).catch(err=>console.log(`DB Read Error: ${err}`))
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            SchandDB.find({status:req.params.status}).sort({createDate:-1}).then(
+                requests=>{
+                    res.render('Status', {
+                        title:'Status',
+                        status: req.params.status,
+                        userAccess,
+                        requests
+                        }
+                    )
+                }
+            ).catch(err=>console.log(`DB Read Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
+        
     }
 )
 
@@ -144,31 +246,45 @@ server.route('/status/:status')
 server.route('/salePerson')
 .get(
     (req,res) => {
-        SchandDB.find().sort({salePerson:1}).then(
-            requests=>{
-                
-                res.render('SalePerson/People', {
-                    title:'Sale-Person Details',
-                    requests
-                    }
-                )
-            }
-        ).catch(err=>console.log(`DB Read Error: ${err}`))
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            SchandDB.find().sort({salePerson:1}).then(
+                requests=>{
+                    
+                    res.render('SalePerson/People', {
+                        title:'Sale-Person Details',
+                        userAccess,
+                        requests
+                        }
+                    )
+                }
+            ).catch(err=>console.log(`DB Read Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
+        
     }
 )
 // single sales person display
 server.route('/salePerson/:id')
 .get(
     (req,res) => {
-        SchandDB.findById(req.params.id).then(
-            request=>{
-                res.render('SalePerson/PersonInfo', {
-                    title:'Sale-Person Details',
-                    request
-                    }
-                )
-            }
-        ).catch(err=>console.log(`DB Read Error: ${err}`))
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            SchandDB.findById(req.params.id).then(
+                request=>{
+                    res.render('SalePerson/PersonInfo', {
+                        title:'Sale-Person Details',
+                        userAccess,
+                        request
+                        }
+                    )
+                }
+            ).catch(err=>console.log(`DB Read Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
+        
     }
 )
 
@@ -176,30 +292,44 @@ server.route('/salePerson/:id')
 server.route('/schools')
 .get(
     (req,res) => {
-        SchandDB.find().sort({school:1}).then(
-            requests=>{
-                res.render('School/Schools', {
-                    title:'All School Details',
-                    requests
-                    }
-                )
-            }
-        ).catch(err=>console.log(`DB Read Error: ${err}`))
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            SchandDB.find().sort({school:1}).then(
+                requests=>{
+                    res.render('School/Schools', {
+                        title:'All School Details',
+                        userAccess,
+                        requests
+                        }
+                    )
+                }
+            ).catch(err=>console.log(`DB Read Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
+        
     }
 )
 // Single school details
 server.route('/school/:id')
 .get(
     (req,res) => {
-        SchandDB.findById(req.params.id).then(
-            request=>{
-                res.render('School/SchoolInfo', {
-                    title:'School Details',
-                    request
-                    }
-                )
-            }
-        ).catch(err=>console.log(`DB Read Error: ${err}`))
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            SchandDB.findById(req.params.id).then(
+                request=>{
+                    res.render('School/SchoolInfo', {
+                        title:'School Details',
+                        userAccess,
+                        request
+                        }
+                    )
+                }
+            ).catch(err=>console.log(`DB Read Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
+        
     }
 )
 
@@ -207,15 +337,22 @@ server.route('/school/:id')
 server.route('/search')
 .post(
     (req,res) => {
-        SchandDB.find({ $text : { $search : req.body.search } }).then(
-            requests=>{
-                res.render('School/Schools', {
-                    title: 'Search Information',
-                    requests
-                    }
-                )
-            }
-        ).catch(err=>console.log(`DB Search Error: ${err}`))
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            SchandDB.find({ $text : { $search : req.body.search } }).then(
+                requests=>{
+                    res.render('School/Schools', {
+                        title: 'Search Information',
+                        userAccess,
+                        requests
+                        }
+                    )
+                }
+            ).catch(err=>console.log(`DB Search Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
+        
     }
 )
 
