@@ -14,3 +14,12 @@
 
 ### v 2.0
 #### Login/Register
+
+### v 3.0
+#### Backup
+##### Download backup in json
+##### Download backup in csv
+
+### v 4.0
+#### ubuntu 16.04 setup
+ 

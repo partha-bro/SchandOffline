@@ -3,6 +3,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
+const fs = require('fs')
+const { Parser } = require('json2csv')
 
 // database import
 const { SchandDB, User } = require('../model/SchandOff')
@@ -355,6 +357,46 @@ server.route('/search')
         
     }
 )
+
+//Download csv file of request data
+server.get('/download/csv', (req,res)=>{
+    if(req.isAuthenticated()){
+        SchandDB.find().then(
+            requests=>{
+                // console.log(requests)
+                const currentDate = new Date()
+                const csvFileName =  `${__dirname}/../public/backup/Schand.csv`
+                const fields = [{
+                    label: 'Sale Person',
+                    value: 'salePerson.name'
+                },{
+                    label: 'E-Mail',
+                    value: 'salePerson.email'
+                },{
+                    label: 'School',
+                    value: 'school.name'
+                },{
+                    label: 'State',
+                    value: 'school.state'
+                }, 'createDate','licNo', 'buildType','status','titles'];
+
+                try {
+                    const json2csvParser = new Parser({ fields });
+                    const csv = json2csvParser.parse(requests);
+                    // console.log(csv);
+                    fs.writeFileSync(csvFileName,csv)
+                    console.log(`Download csv file Successfully`)
+                    res.download(csvFileName,`Schand_${currentDate.toDateString()}.csv`)
+                } catch (err) {
+                    console.error(err);
+                }
+                
+            }
+        ).catch(err=>console.log(`DB Download Json file Error: ${err}`))
+    }else{
+        res.redirect('/Login')
+    }
+})
 
 // handle wrong url hit in browser
 server.get('*',(req,res)=>{
