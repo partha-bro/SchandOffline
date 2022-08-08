@@ -42,6 +42,9 @@
                 <td><%= requests[i].licNo %></td>
                 <td><%= requests[i].school.state %></td>
                 <td><%= requests[i].createDate %></td>
+                <% if(userAccess === 'admin'){ %>
+                  <td><a class="btn btn-warning" href="/edit/<%= requests[i]._id %>">Edit</a></td>
+                <% } %>
               </tr>
               <% } %>
           </tbody>
