@@ -24,26 +24,44 @@
             </tr>
           </thead>
           <tbody>
-            <% let count = 1 %>
-            <% requests.forEach((request)=>{ %>
+            <% let count = min %>
+            <% for(let i = min; i < max; i++){ %>
               <tr>
+                <% if(i === totalNo){ %>
+                  <% break; %>
+                <% } %>
                 <td><%= count++ %></td>
-                <td><a class="text-primry" href="/salePerson/<%= request._id %>"><strong><%= request.salePerson.name %></strong></a></td>
-                <td><%= request.school.name %></td>
-                <% const titlesArray = request.titles.split(',') %>
+                <td><a class="text-primry" href="/salePerson/<%= requests[i]._id %>"><strong><%= requests[i].salePerson.name %></strong></a></td>
+                <td><%= requests[i].school.name %></td>
+                <% const titlesArray = requests[i].titles.split(',') %>
                 <td><ol>
                   <% titlesArray.forEach((title)=>{ %>
                     <li><%= title %></li>
                   <% }) %>
                   </ol></td>
-                <td><%= request.licNo %></td>
-                <td><%= request.school.state %></td>
-                <td><%= request.createDate %></td>
+                <td><%= requests[i].licNo %></td>
+                <td><%= requests[i].school.state %></td>
+                <td><%= requests[i].createDate %></td>
               </tr>
-              <% }) %>
+              <% } %>
           </tbody>
         </table>
         
+        <% if(pagination === 'yes'){ %>
+          <!-- Pagination Code Start -->
+         <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link">PAGE:</a>
+            </li>
+            <% for(let i = 1; i <= Math.ceil(requests.length/10); i++){ %>
+              <li class="page-item"><a class="page-link" href="/page/<%= i %>"><%= i %></a></li>
+            <% } %>
+          </ul>
+        </nav>
+        <!-- Pagination Code END -->
+        <% } %>
+         
 
       </div>
     </div>

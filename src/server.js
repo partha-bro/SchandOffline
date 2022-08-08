@@ -90,7 +90,7 @@ server.route('/')
         if(req.isAuthenticated()){
             const userAccess = req.session.passport.user
             // select all data with decending order of createDate
-            SchandDB.find().sort({createDate:-1}).limit().then(
+            SchandDB.find().sort({createDate:-1}).then(
                 requests=>{
 
                     SchandDB.find().then(
@@ -108,6 +108,8 @@ server.route('/')
                                 totalAppLicNo,
                                 totalLanLicNo,
                                 userAccess,
+                                min: 0,
+                                max: 10,
                                 requests
                                 }
                             )
@@ -116,6 +118,34 @@ server.route('/')
                     
                 }
             ).catch(err=>console.log(`DB Read Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
+    }
+)
+
+server.route('/page/:id')
+.get(
+    (req,res)=>{
+        
+        const max = 10*req.params.id
+        const min = max-10
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            SchandDB.find().sort({createDate:-1}).then(
+                requests=>{
+                    res.render('School/Schools', {
+                        title: 'Search Information',
+                        userAccess,
+                        pagination: 'yes',
+                        min,
+                        max,
+                        totalNo: requests.length,
+                        requests
+                        }
+                    )
+                }
+            ).catch(err=>console.log(`DB Search Error: ${err}`))
         }else{
             res.redirect('/Login')
         }
@@ -301,6 +331,10 @@ server.route('/schools')
                     res.render('School/Schools', {
                         title:'All School Details',
                         userAccess,
+                        pagination: 'no',
+                        min : 0,
+                        max : requests.length,
+                        totalNo: requests.length,
                         requests
                         }
                     )
@@ -346,6 +380,10 @@ server.route('/search')
                     res.render('School/Schools', {
                         title: 'Search Information',
                         userAccess,
+                        pagination: 'no',
+                        min: 0,
+                        max: requests.length,
+                        totalNo: requests.length,
                         requests
                         }
                     )
