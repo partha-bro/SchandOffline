@@ -32,6 +32,9 @@
               <% let count = 1 %>
               <% for(let i = 0; i < 10; i++){ %>
                 <tr>
+                  <% if(i === requests.length){ %>
+                    <% break; %>
+                  <% } %>
                   <td><%= count++ %></td>
                   <td><a class="text-primry" href="/salePerson/<%= requests[i]._id %>"><strong><%= requests[i].salePerson.name %></strong></a></td>
                   <td><a class="text-secondary" href="/school/<%= requests[i]._id %>"><strong><%= requests[i].school.name %></strong></a></td>
