@@ -9,7 +9,7 @@ const { Parser } = require('json2csv')
 // database import
 const { SchandDB, User } = require('../model/SchandOff')
 // some method import from calculate 
-const { totalRequestFun,sumOfTotalSchandTotalApp,sumOfTotalLanPortal,sumOfAppLicNo,sumOfLanLicNo } = require('./Calculate')
+const { totalRequestFun,sumOfTotalSchandTotalApp,sumOfTotalLanPortal,sumOfTotalLicNo,sumOfAppLicNo,sumOfLanLicNo } = require('./Calculate')
 
 const server = express()
 server.set('view engine', 'ejs')
@@ -98,6 +98,7 @@ server.route('/')
                             const totalRequest = totalRequestFun(allRequests)
                             const totalSchandTotal = sumOfTotalSchandTotalApp(allRequests)
                             const totalLanPortal = sumOfTotalLanPortal(allRequests)
+                            const totalLicNo = sumOfTotalLicNo(allRequests)
                             const totalAppLicNo = sumOfAppLicNo(allRequests)
                             const totalLanLicNo = sumOfLanLicNo(allRequests)
                             res.render('Home', {
@@ -105,6 +106,7 @@ server.route('/')
                                 totalRequest,
                                 totalSchandTotal,
                                 totalLanPortal,
+                                totalLicNo,
                                 totalAppLicNo,
                                 totalLanLicNo,
                                 userAccess,
