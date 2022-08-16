@@ -18,6 +18,7 @@
               <th scope="col">Sales-person</th>
               <th scope="col">School</th>
               <th scope="col">Titles</th>
+              <th scope="col">Type</th>
               <th scope="col">LIC No</th>
               <th scope="col">State</th>
               <th scope="col">Request No</th>
@@ -39,6 +40,7 @@
                     <li><%= title %></li>
                   <% }) %>
                   </ol></td>
+                <td><%= requests[i].buildType %></td>
                 <td><%= requests[i].licNo %></td>
                 <td><%= requests[i].school.state %></td>
                 <td><%= requests[i].createDate %></td>
