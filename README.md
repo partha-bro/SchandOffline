@@ -39,4 +39,6 @@
 
 ### v 5.0
 #### ubuntu 16.04 setup
- 
+
+### v 6.0
+#### Add subject lists in menu

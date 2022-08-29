@@ -7,7 +7,7 @@ const fs = require('fs')
 const { Parser } = require('json2csv')
 
 // database import
-const { SchandDB, User } = require('../model/SchandOff')
+const { SchandDB, User, Subject } = require('../model/SchandOff')
 // some method import from calculate 
 const { totalRequestFun,sumOfTotalSchandTotalApp,sumOfTotalLanPortal,sumOfTotalLicNo,sumOfAppLicNo,sumOfLanLicNo } = require('./Calculate')
 
@@ -438,9 +438,111 @@ server.get('/download/csv', (req,res)=>{
     }
 })
 
+// create a new subject title
+server.route('/createSubject')
+.get(
+    (req,res)=>{
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            if(userAccess === 'admin'){
+                res.render('Subject/CreateSubject', {title: 'Create Title',userAccess})
+            }else{
+                res.redirect('/')
+            }
+            
+        }else{
+            res.redirect('/Login')
+        }
+        
+    }
+)
+.post(
+    (req,res)=>{
+
+        const newSubject = new Subject(
+            {
+                titles: req.body.titles,
+                classes: req.body.classes,
+                schandtotalEncStatus: req.body.schandtotalEncStatus,
+                lanEncStatus: req.body.lanEncStatus
+            }
+        )
+        newSubject.save().then(e=>{
+            console.log(`New Subject Saved Successfully`)
+            res.redirect('/subject')
+        })
+        .catch(err=>console.log(`Not Saved, Error: ${err}`))
+    }
+)
+
+// List of all subjects
+server.route('/subject')
+.get(
+    (req,res)=>{
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            Subject.find().sort({school:1}).then(
+                requests=>{
+                    res.render('Subject/Subject', {
+                        title:'All Titles',
+                        userAccess,
+                        pagination: 'no',
+                        min : 0,
+                        max : requests.length,
+                        totalNo: requests.length,
+                        requests
+                        }
+                    )
+                }
+            ).catch(err=>console.log(`DB Read Error: ${err}`))
+        }else{
+            res.redirect('/Login')
+        }
+    }
+)
+// Edit of subject titles
+server.route('/Subject/EditSubject/:id')
+.get(
+    (req,res)=>{
+        if(req.isAuthenticated()){
+            const userAccess = req.session.passport.user
+            if(userAccess === 'admin'){
+                const id = req.params.id
+                Subject.findById(id).then(
+                    request=>{
+                        res.render('Subject/EditSubject', {title:'Edit Subject',userAccess,request})
+                    }
+                ).catch(err=>console.log(`DB Edit Error: ${err}`))
+            }else{
+                res.redirect('/')
+            }
+            
+        }else{
+            res.redirect('/Login')
+        }
+        
+    }
+)
+.post(
+    (req,res)=>{
+        const id = req.params.id
+        Subject.findByIdAndUpdate(id,{
+            titles: req.body.titles,
+            classes: req.body.classes,
+            schandtotalEncStatus: req.body.schandtotalEncStatus,
+            lanEncStatus: req.body.lanEncStatus
+        }).then(e=>{
+            console.log(`Data Updated Successfully`)
+            res.redirect('/subject')
+        })
+        .catch(err=>console.log(`Not updated!, Error: ${err}`))
+    }
+)
+
+
 // handle wrong url hit in browser
 server.get('*',(req,res)=>{
-    res.redirect('/')
+    res.render('Error')
 })
 
 // Server Listen to below port

@@ -51,6 +51,16 @@ const schandOfflineSchema = new mongoose.Schema(
 )
 schandOfflineSchema.index({"school.name": "text"})
 
+const subjectSchema = new mongoose.Schema(
+    {
+        titles: String,
+        classes: String,
+        schandtotalEncStatus: String,
+        lanEncStatus: String,
+    }
+)
+
 const SchandDB = mongoose.model('request',schandOfflineSchema)
 const User = mongoose.model('user',userSchema)
-module.exports = { SchandDB, User }
+const Subject = mongoose.model('subject',subjectSchema)
+module.exports = { SchandDB, User, Subject }

@@ -1,0 +1,75 @@
+<%- include('../partials/Header') %>
+<%- include('../partials/Menu') %>
+
+<!--Section: Sales Performance KPIs-->
+<section class="mb-4">
+  <div class="card">
+    <div class="card-header text-center py-3 bg-success text-white">
+      <h5 class="mb-0 text-center">
+        <strong><%= title %>[ Total = <%= requests.length %> ]</strong>
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover text-nowrap">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Subject Titles</th>
+              <th scope="col">Classes</th>
+              <th scope="col">SchandTotal Encryption Status</th>
+              <th scope="col">LAN Encryption Status</th>
+              <% if(userAccess === 'admin'){ %>
+                <th scope="col">Edit</th>
+              <% } %>
+            </tr>
+          </thead>
+          <tbody>
+            <% let count = min %>
+            <% for(let i = min; i < max; i++){ %>
+              <tr>
+                <% if(i === totalNo){ %>
+                  <% break; %>
+                <% } %>
+                <td><%= count++ %></td>
+                <td><a class="text-primry" href=""><strong><%= requests[i].titles %></strong></a></td>
+                <td><%= requests[i].classes %></td>
+                <% if( requests[i].schandtotalEncStatus === 'Done'){ %>
+                    <td><strong class="text-success"><%= requests[i].schandtotalEncStatus %></strong></td>
+                <% }else{ %>
+                    <td><strong class="text-danger"><%= requests[i].schandtotalEncStatus %></strong></td>
+                <% }if( requests[i].lanEncStatus === 'Done'){ %>
+                    <td><strong class="text-success"><%= requests[i].lanEncStatus %></strong></td>
+                <% }else{ %>
+                    <td><strong class="text-danger"><%= requests[i].lanEncStatus %></strong></td>
+                <% }if(userAccess === 'admin'){ %>
+                  <td><a class="btn btn-warning" href="/Subject/EditSubject/<%= requests[i]._id %>">Edit</a></td>
+                <% } %>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+        
+        <% if(pagination === 'yes'){ %>
+          <!-- Pagination Code Start -->
+         <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link">PAGE:</a>
+            </li>
+            <% for(let i = 1; i <= Math.ceil(requests.length/10); i++){ %>
+              <li class="page-item"><a class="page-link" href="/page/<%= i %>"><%= i %></a></li>
+            <% } %>
+          </ul>
+        </nav>
+        <!-- Pagination Code END -->
+        <% } %>
+         
+
+      </div>
+    </div>
+  </div>
+</section>
+<!--Section: Sales Performance KPIs-->
+
+<%- include('../partials/Footer') %>

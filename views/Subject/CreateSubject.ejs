@@ -1,0 +1,50 @@
+<%- include('../partials/Header') %>
+<%- include('../partials/Menu') %>
+
+<!-- Section: Footer -->
+<section class="mb-4">
+    <div class="card">
+      <div class="card-header py-3 bg-success">
+        <h5 class="mb-0 text-center text-white"><strong><%= title %></strong></h5>
+      </div>
+    </div>
+  </section>
+
+  <form action="/createSubject" method="post">
+    <!-- Section: form -->
+    <div class="input-group mb-3">
+        <span class="input-group-text bg-success text-white" id="basic-addon9" style="min-width: 200px">Title</span>
+        <input type="text" class="form-control" aria-label="titles" name="titles" aria-describedby="basic-addon9" />
+      </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text bg-success text-white" id="basic-addon6" style="min-width: 200px">Classes</span>
+      <input type="text" class="form-control" aria-label="classes" name="classes" aria-describedby="basic-addon6" />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text bg-success text-white" id="basic-addon7" style="min-width: 200px">SchandTotal Enc. Status</span>
+      <select name="schandtotalEncStatus" aria-describedby="basic-addon7" class="form-control">
+        <option >Please select project type</option>
+        <option value="Done">Done</option>
+        <option value="Not">Not</option>
+      </select>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text bg-success text-white" id="basic-addon8" style="min-width: 200px">LAN Enc. Status</span>
+      <select name="lanEncStatus" aria-describedby="basic-addon8" class="form-control">
+        <option >Please select project status</option>
+        <option value="Done">Done</option>
+        <option value="Not">Not</option>
+      </select>
+    </div>
+    
+    
+    <div class="input-group mb-3">
+      <input type="submit" class="form-control btn btn-success" name="submit" value="Submit" />
+    </div>
+  </form>
+  
+  
+  
+
+<%- include('../partials/Footer') %>
