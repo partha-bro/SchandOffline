@@ -3,6 +3,20 @@
 ## About
 
     This website contains sales person, school and titles information about Offline Request.
+	
+## Requirements
+	node version: 16.16.0
+	mongoDB version: minimum 4
+	for developer: 
+		nodemon
+		command: npm run dev
+	for live:
+		command: npm start
+		
+	NOTE: Make sure create a .env file and mention below parameters
+		PORT=5000
+		MONGODB_URL=mongodb://127.0.0.1:27017/
+		SESSION_SECRET= [ Contact admin for this string ]
 
 ## Features
 
