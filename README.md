@@ -4,6 +4,8 @@
 
     This website contains sales person, school and titles information about Offline Request.
 	
+![Screenshot](schandoffline.PNG)
+
 ## Requirements
 	node version: 16.16.0
 	mongoDB version: minimum 4
