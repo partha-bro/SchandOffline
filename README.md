@@ -6,6 +6,18 @@
 	
 ![Screenshot](schandoffline.PNG)
 
+## Use Modules
+	- node
+	- express
+	- dotenv
+    - ejs
+    - express-session
+    - json2csv
+    - mongoose
+    - passport
+    - passport-local
+    - passport-local-mongoose
+    
 ## Requirements
 	node version: 16.16.0
 	mongoDB version: minimum 4
